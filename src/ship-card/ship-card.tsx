@@ -15,12 +15,12 @@ const ShipCard = ({ ship }: ShipProps) => {
       <Card.Header>{name}</Card.Header>
       <Card.Body>
         <Card.Text>
-          <div>{owner}</div>
-          <div>{built}</div>
-          <div>{maxTEU}</div>
-          <div>{beamMeters}</div>
-          <div>{lengthMeters}</div>
-          <div>{grossTonnage}</div>
+          <div>Owner: {owner}</div>
+          <div>Built: {built}</div>
+          <div>Max TEU: {maxTEU}</div>
+          <div>Beam (m): {beamMeters}</div>
+          <div>Length (m): {lengthMeters}</div>
+          <div>Gross (t): {grossTonnage}</div>
         </Card.Text>
       </Card.Body>
     </Card>

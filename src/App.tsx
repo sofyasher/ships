@@ -1,11 +1,29 @@
 import React from 'react';
 import './App.scss';
 import ShipsList from './ships-list/ships-list';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import ShipDetail from './ship-detail/ship-detail';
+import NotFound from './not-found/ship-detail';
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <ShipsList />,
+  },
+  {
+    path: '/ship/:id',
+    element: <ShipDetail />,
+  },
+  {
+    path: '*',
+    element: <NotFound />,
+  },
+]);
 
 const App = () => {
   return (
     <div className='App'>
-      <ShipsList />
+      <RouterProvider router={router} />
     </div>
   );
 };
