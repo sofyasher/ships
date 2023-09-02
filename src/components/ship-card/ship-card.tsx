@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card } from 'react-bootstrap';
-import { ShipModel } from '../models/ship-model';
+import { ShipModel } from '../../models/ship-model';
 import './ship-card.scss';
 
 type ShipProps = {

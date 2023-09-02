@@ -1,8 +1,8 @@
-import { API_URL, get } from './shared/api';
-import { ShipsModel } from './models/ship-model';
+import { get, SHIPS_LIST_URL } from './api';
+import { ShipsModel } from '../models/ship-model';
 
 export const fetchShips = (setShips: any) => {
-  get(API_URL)
+  get(SHIPS_LIST_URL)
     .then((response) => {
       if (response.ok) {
         return response.json();

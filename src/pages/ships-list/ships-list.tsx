@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
-import { ShipModel } from '../models/ship-model';
-import ShipCard from '../ship-card/ship-card';
+import { ShipModel } from '../../models/ship-model';
+import ShipCard from '../../components/ship-card/ship-card';
 import { Link } from 'react-router-dom';
-import { fetchShips } from '../requests';
+import { fetchShips } from '../../shared/requests';
 
 const ShipsList = () => {
   const [ships, setShips] = useState<ShipModel[]>([]);
