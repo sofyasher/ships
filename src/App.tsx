@@ -3,7 +3,7 @@ import './App.scss';
 import ShipsList from './pages/ships-list/ships-list';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import ShipDetail from './components/ship-detail/ship-detail';
-import NotFound from './pages/not-found/ship-detail';
+import NotFound from './pages/not-found/not-found';
 
 const router = createBrowserRouter([
   {

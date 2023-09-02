@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
-import { ShipModel } from '../../models/ship-model';
+import { ShipModel } from '../../models/ship.model';
 import ShipCard from '../../components/ship-card/ship-card';
 import { useNavigate } from 'react-router-dom';
 import { fetchShips } from '../../shared/requests';
