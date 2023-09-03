@@ -16,3 +16,5 @@ For running the app locally do the following steps:
 ## Testing
 1. In the project directory run `yarn test`.
 2. To see the generated code coverage report, go to the folder `<root>/coverage/lcov-report` and open `index.html` in your browser
+
+You can try the app on https://ships.sherstneva.cz.
