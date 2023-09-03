@@ -17,7 +17,7 @@ const ShipDetail = () => {
   return (
     <>
       {ship ? (
-        <Container fluid>
+        <Container fluid className='mt-3'>
           <ShipCard ship={ship} isOnDetailedPage={true} />
         </Container>
       ) : (

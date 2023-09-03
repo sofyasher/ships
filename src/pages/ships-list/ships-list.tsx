@@ -23,6 +23,7 @@ const ShipsList = () => {
             xs={12}
             md={4}
             onClick={() => navigate(`/ship/${ship.id}`)}
+            className='mt-3 mb-2'
           >
             <ShipCard ship={ship} />
           </Col>
