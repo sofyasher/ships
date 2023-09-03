@@ -4,6 +4,7 @@ import { fetchShips } from '../../requests';
 import { ShipModel } from '../../models/ship.model';
 import { Container } from 'react-bootstrap';
 import ShipCard from '../ship-card/ship-card';
+import './ship-detail.scss';
 
 const ShipDetail = () => {
   const { id } = useParams();
@@ -17,10 +18,15 @@ const ShipDetail = () => {
     <>
       {ship ? (
         <Container fluid>
-          <ShipCard ship={ship} />
+          <ShipCard ship={ship} isOnDetailedPage={true} />
         </Container>
       ) : (
-        <div>Ship with id {id} not found</div>
+        <Container
+          fluid
+          className='d-flex align-items-center justify-content-center vh-100'
+        >
+          <h3>Ship with id {id} not found</h3>
+        </Container>
       )}
     </>
   );

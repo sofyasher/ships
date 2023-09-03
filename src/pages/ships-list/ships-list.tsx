@@ -24,7 +24,7 @@ const ShipsList = () => {
             md={4}
             onClick={() => navigate(`/ship/${ship.id}`)}
           >
-            <ShipCard ship={ship} isClickable={true} />
+            <ShipCard ship={ship} />
           </Col>
         ))}
       </Row>

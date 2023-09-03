@@ -8,10 +8,10 @@ import { CountryParsingException } from '../../exceptions/country-parsing-except
 
 type ShipProps = {
   ship: ShipModel;
-  isClickable?: boolean;
+  isOnDetailedPage?: boolean;
 };
 
-const getCountry = (
+const getCountryName = (
   shipOwner: string,
   parsingMode: CountryParsingMode = CountryParsingMode.STRICT,
 ): string => {
@@ -20,7 +20,7 @@ const getCountry = (
   } catch (e) {
     if (e instanceof CountryParsingException) {
       if (parsingMode === CountryParsingMode.STRICT) {
-        return getCountry(shipOwner, CountryParsingMode.NORMAL);
+        return getCountryName(shipOwner, CountryParsingMode.NORMAL);
       }
       return 'Unknown';
     }
@@ -28,24 +28,26 @@ const getCountry = (
   }
 };
 
-const ShipCard = ({ ship, isClickable }: ShipProps) => {
+const ShipCard = ({ ship, isOnDetailedPage }: ShipProps) => {
   return (
     <Card
-      className='ship-card'
-      style={{ cursor: isClickable ? 'pointer' : 'initial' }}
+      border='info'
+      className={`ship-card ${isOnDetailedPage ? 'on-detailed-page' : ''}`}
     >
-      <Card.Header>{ship.name}</Card.Header>
+      <Card.Header>
+        <strong>{ship.name}</strong>
+      </Card.Header>
       <Card.Body>
-        <Card.Text>
-          <div>Country of origin: {getCountry(ship.owner)}</div>
-          <div>Built: {ship.built}</div>
-          <div>Name: {ship.name}</div>
-          <div>Length: {ship.lengthMeters}m</div>
-          <div>Beam: {ship.beamMeters}m</div>
-          <div>Max TEU: {ship.maxTEU}</div>
-          <div>Owner: {ship.owner}</div>
-          <div>Gross Tonnage: {ship.grossTonnage}</div>
-        </Card.Text>
+        <ul className='ship-card-list'>
+          <li>Country of origin: {getCountryName(ship.owner)}</li>
+          {!isOnDetailedPage ?? <li>Built: {ship.built}</li>}
+          {!isOnDetailedPage ?? <li>Name: {ship.name}</li>}
+          {!isOnDetailedPage ?? <li>Length: {ship.lengthMeters}m</li>}
+          {!isOnDetailedPage ?? <li>Beam: {ship.beamMeters}m</li>}
+          <li>TEU: {ship.maxTEU}</li>
+          {!isOnDetailedPage ?? <li>Owner: {ship.owner}</li>}
+          {!isOnDetailedPage ?? <li>Gross Tonnage: {ship.grossTonnage}</li>}
+        </ul>
       </Card.Body>
     </Card>
   );
