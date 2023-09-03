@@ -3,7 +3,6 @@ import { Card } from 'react-bootstrap';
 import { ShipModel } from '../../models/ship.model';
 import './ship-card.scss';
 import { getCountryOfOriginFromShipowner } from '../../utils/utils';
-import { CountryParsingMode } from '../../enums/country-parsing-mode.enum';
 import { CountryParsingException } from '../../exceptions/country-parsing-exception';
 
 type ShipProps = {
@@ -11,17 +10,11 @@ type ShipProps = {
   isOnDetailedPage?: boolean;
 };
 
-const getCountryName = (
-  shipOwner: string,
-  parsingMode: CountryParsingMode = CountryParsingMode.STRICT,
-): string => {
+const getCountryName = (shipOwner: string): string => {
   try {
-    return getCountryOfOriginFromShipowner(shipOwner, parsingMode);
+    return getCountryOfOriginFromShipowner(shipOwner);
   } catch (e) {
     if (e instanceof CountryParsingException) {
-      if (parsingMode === CountryParsingMode.STRICT) {
-        return getCountryName(shipOwner, CountryParsingMode.NORMAL);
-      }
       return 'Unknown';
     }
     throw e;

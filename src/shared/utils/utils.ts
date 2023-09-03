@@ -1,28 +1,22 @@
-import { CountryParsingMode } from '../enums/country-parsing-mode.enum';
 import { CountryParsingException } from '../exceptions/country-parsing-exception';
 
-const regExpForCountryParsingModes: Map<CountryParsingMode, RegExp> = new Map([
-  [CountryParsingMode.STRICT, /.+\((?<countryName>[^)]+)\)$/],
-  [CountryParsingMode.NORMAL, /.+\((?<countryName>([^()]|\(.+\))+)\)$/],
-]);
+const COUNTRY_NAME_IN_OWNER_INFO_REG_EXP =
+  /.+\((?<countryName>([^()]|\(.+\))+)\)$/;
+
 /**
- * Return's a country name from company's name, if contained.
+ * Parses a company name to retrieve a country name. Returns the country name if contained.
  * Country name should be in the end and wrapped into round brackets.
  * @param ownerInfo string, Company name
- * @param parsingMode CountryParsingMode, Parsing mode
- * @throws CountryParsingException When country couldn't be retrieved
+ * @throws CountryParsingException When country name couldn't be retrieved
  */
-export const getCountryOfOriginFromShipowner = (
-  ownerInfo: string,
-  parsingMode: CountryParsingMode,
-): string => {
-  const nameWithCountryRegExp = regExpForCountryParsingModes.get(parsingMode)!!;
-  let captureGroups = nameWithCountryRegExp.exec(ownerInfo)?.groups;
-  if (!captureGroups) {
+export const getCountryOfOriginFromShipowner = (ownerInfo: string): string => {
+  let capturingGroups =
+    COUNTRY_NAME_IN_OWNER_INFO_REG_EXP.exec(ownerInfo)?.groups;
+  if (!capturingGroups?.countryName) {
     throw new CountryParsingException(
-      `Couldn't retrieve country name from owner info: ${ownerInfo}`,
+      `Couldn't retrieve country name from the owner info: ${ownerInfo}`,
     );
   }
 
-  return captureGroups.countryName;
+  return capturingGroups.countryName;
 };
