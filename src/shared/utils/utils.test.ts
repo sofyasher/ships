@@ -201,7 +201,7 @@ describe('getCountryOfOriginFromShipowner tests', () => {
     expect(country).toEqual('Myanmar (formerly Burma)');
   });
 
-  test('!!!OOCL (Eswatini (fmr. "Swaziland")) [strict] -> Exception', () => {
+  test('OOCL (Eswatini (fmr. "Swaziland")) [strict] -> Exception', () => {
     expect(() => {
       getCountryOfOriginFromShipowner(
         'OOCL (Eswatini (fmr. "Swaziland"))',
@@ -210,7 +210,7 @@ describe('getCountryOfOriginFromShipowner tests', () => {
     }).toThrow(CountryParsingException);
   });
 
-  test('!!!OOCL (Eswatini (fmr. "Swaziland")) -> Eswatini (fmr. "Swaziland")', () => {
+  test('OOCL (Eswatini (fmr. "Swaziland")) -> Eswatini (fmr. "Swaziland")', () => {
     const country = getCountryOfOriginFromShipowner(
       'OOCL (Eswatini (fmr. "Swaziland"))',
       CountryParsingMode.NORMAL,

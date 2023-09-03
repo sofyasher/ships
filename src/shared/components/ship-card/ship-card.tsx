@@ -40,13 +40,13 @@ const ShipCard = ({ ship, isOnDetailedPage }: ShipProps) => {
       <Card.Body>
         <ul className='ship-card-list'>
           <li>Country of origin: {getCountryName(ship.owner)}</li>
-          {!isOnDetailedPage ?? <li>Built: {ship.built}</li>}
-          {!isOnDetailedPage ?? <li>Name: {ship.name}</li>}
-          {!isOnDetailedPage ?? <li>Length: {ship.lengthMeters}m</li>}
-          {!isOnDetailedPage ?? <li>Beam: {ship.beamMeters}m</li>}
+          {isOnDetailedPage && <li>Built: {ship.built}</li>}
+          {isOnDetailedPage && <li>Name: {ship.name}</li>}
+          {isOnDetailedPage && <li>Length: {ship.lengthMeters}m</li>}
+          {isOnDetailedPage && <li>Beam: {ship.beamMeters}m</li>}
           <li>TEU: {ship.maxTEU}</li>
-          {!isOnDetailedPage ?? <li>Owner: {ship.owner}</li>}
-          {!isOnDetailedPage ?? <li>Gross Tonnage: {ship.grossTonnage}</li>}
+          {isOnDetailedPage && <li>Owner: {ship.owner}</li>}
+          {isOnDetailedPage && <li>Gross Tonnage: {ship.grossTonnage}</li>}
         </ul>
       </Card.Body>
     </Card>

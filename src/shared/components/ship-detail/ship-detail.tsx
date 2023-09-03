@@ -12,7 +12,7 @@ const ShipDetail = () => {
   useEffect(() => {
     fetchShips(setShips);
   }, [id]);
-  const ship = ships.find((ship) => ship.id === parseInt(id!!))!!;
+  const ship = ships.find((ship) => ship.id.toString() === id);
 
   return (
     <>
