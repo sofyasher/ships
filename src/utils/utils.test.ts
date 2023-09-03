@@ -1,90 +1,246 @@
+import { CountryParsingMode } from '../enums/country-parsing-mode.enum';
 import { getCountryOfOriginFromShipowner } from './utils';
+import { ParsingCountryException } from '../exceptions/parsing-country-exception';
 
 describe('getCountryOfOriginFromShipowner tests', () => {
-  const logSpy = jest.spyOn(global.console, 'error');
-
-  test('COSCO (China) -> China', () => {
-    const country = getCountryOfOriginFromShipowner('COSCO (China)');
-    expect(logSpy).toHaveBeenCalledTimes(0);
+  test('COSCO (China) [strict] -> China', () => {
+    const country = getCountryOfOriginFromShipowner(
+      'COSCO (China)',
+      CountryParsingMode.STRICT,
+    );
     expect(country).toEqual('China');
   });
 
-  test('OOCL (Hong Kong) -> Hong Kong', () => {
-    const country = getCountryOfOriginFromShipowner('OOCL (Hong Kong)');
-    expect(logSpy).toHaveBeenCalledTimes(0);
+  test('COSCO (China) [normal] -> China', () => {
+    const country = getCountryOfOriginFromShipowner(
+      'COSCO (China)',
+      CountryParsingMode.NORMAL,
+    );
+    expect(country).toEqual('China');
+  });
+
+  test('OOCL (Hong Kong) [strict] -> Hong Kong', () => {
+    const country = getCountryOfOriginFromShipowner(
+      'OOCL (Hong Kong)',
+      CountryParsingMode.STRICT,
+    );
     expect(country).toEqual('Hong Kong');
   });
 
-  test('OOCL (Hong Kong -> ""', () => {
-    const country = getCountryOfOriginFromShipowner('OOCL (Hong Kong');
-    expect(logSpy).toHaveBeenCalled();
-    expect(country).toEqual('');
+  test('OOCL (Hong Kong) [normal] -> Hong Kong', () => {
+    const country = getCountryOfOriginFromShipowner(
+      'OOCL (Hong Kong)',
+      CountryParsingMode.NORMAL,
+    );
+    expect(country).toEqual('Hong Kong');
   });
 
-  test('OOCL Hong Kong -> ""', () => {
-    const country = getCountryOfOriginFromShipowner('OOCL Hong Kong');
-    expect(logSpy).toHaveBeenCalled();
-    expect(country).toEqual('');
+  test('Mitsui O.S.K. Lines (Hong Kong) [strict] -> Hong Kong', () => {
+    const country = getCountryOfOriginFromShipowner(
+      'Mitsui O.S.K. Lines (Hong Kong)',
+      CountryParsingMode.STRICT,
+    );
+    expect(country).toEqual('Hong Kong');
   });
 
-  test('OOCL () Hong Kong -> ""', () => {
-    const country = getCountryOfOriginFromShipowner('OOCL () Hong Kong');
-    expect(logSpy).toHaveBeenCalled();
-    expect(country).toEqual('');
+  test('Mitsui O.S.K. Lines (Hong Kong) [normal] -> Hong Kong', () => {
+    const country = getCountryOfOriginFromShipowner(
+      'Mitsui O.S.K. Lines (Hong Kong)',
+      CountryParsingMode.NORMAL,
+    );
+    expect(country).toEqual('Hong Kong');
   });
 
-  test('OOCL () -> ""', () => {
-    const country = getCountryOfOriginFromShipowner('OOCL ()');
-    expect(logSpy).toHaveBeenCalledTimes(0);
-    expect(country).toEqual('');
+  test('OOCL (Hong Kong [strict] -> Exception', () => {
+    expect(() => {
+      getCountryOfOriginFromShipowner(
+        'OOCL (Hong Kong',
+        CountryParsingMode.STRICT,
+      );
+    }).toThrow(ParsingCountryException);
   });
 
-  test('OOCL  )Hong Kong( -> ""', () => {
-    const country = getCountryOfOriginFromShipowner('OOCL  )Hong Kong(');
-    expect(logSpy).toHaveBeenCalled();
-    expect(country).toEqual('');
+  test('OOCL (Hong Kong [normal] -> Exception', () => {
+    expect(() => {
+      getCountryOfOriginFromShipowner(
+        'OOCL (Hong Kong',
+        CountryParsingMode.NORMAL,
+      );
+    }).toThrow(ParsingCountryException);
   });
 
-  test('OOCL  ((Hong Kong) -> (Hong Kong', () => {
-    const country = getCountryOfOriginFromShipowner('OOCL  ((Hong Kong)');
-    expect(logSpy).toHaveBeenCalledTimes(0);
-    expect(country).toEqual('(Hong Kong');
+  test('OOCL Hong Kong [strict] -> Exception', () => {
+    expect(() => {
+      getCountryOfOriginFromShipowner(
+        'OOCL Hong Kong',
+        CountryParsingMode.STRICT,
+      );
+    }).toThrow(ParsingCountryException);
   });
 
-  test('OOCL ((Hong Kong)) -> (Hong Kong)', () => {
-    const country = getCountryOfOriginFromShipowner('OOCL ((Hong Kong))');
-    expect(logSpy).toHaveBeenCalledTimes(0);
+  test('OOCL Hong Kong [normal] -> Exception', () => {
+    expect(() => {
+      getCountryOfOriginFromShipowner(
+        'OOCL Hong Kong',
+        CountryParsingMode.NORMAL,
+      );
+    }).toThrow(ParsingCountryException);
+  });
+
+  test('OOCL () Hong Kong [strict] -> Exception', () => {
+    expect(() => {
+      getCountryOfOriginFromShipowner(
+        'OOCL () Hong Kong',
+        CountryParsingMode.STRICT,
+      );
+    }).toThrow(ParsingCountryException);
+  });
+
+  test('OOCL () Hong Kong [normal] -> Exception', () => {
+    expect(() => {
+      getCountryOfOriginFromShipowner(
+        'OOCL () Hong Kong',
+        CountryParsingMode.NORMAL,
+      );
+    }).toThrow(ParsingCountryException);
+  });
+
+  test('OOCL () [strict] -> Exception', () => {
+    expect(() => {
+      getCountryOfOriginFromShipowner('OOCL ()', CountryParsingMode.STRICT);
+    }).toThrow(ParsingCountryException);
+  });
+
+  test('OOCL () [normal] -> Exception', () => {
+    expect(() => {
+      getCountryOfOriginFromShipowner('OOCL ()', CountryParsingMode.NORMAL);
+    }).toThrow(ParsingCountryException);
+  });
+
+  test('OOCL  )Hong Kong( [strict] -> Exception', () => {
+    expect(() => {
+      getCountryOfOriginFromShipowner(
+        'OOCL  )Hong Kong(',
+        CountryParsingMode.STRICT,
+      );
+    }).toThrow(ParsingCountryException);
+  });
+
+  test('OOCL  )Hong Kong( [normal] -> Exception', () => {
+    expect(() => {
+      getCountryOfOriginFromShipowner(
+        'OOCL  )Hong Kong(',
+        CountryParsingMode.NORMAL,
+      );
+    }).toThrow(ParsingCountryException);
+  });
+
+  test('OOCL  ((Hong Kong) [strict] -> Hong Kong', () => {
+    const country = getCountryOfOriginFromShipowner(
+      'OOCL  ((Hong Kong)',
+      CountryParsingMode.STRICT,
+    );
+    expect(country).toEqual('Hong Kong');
+  });
+
+  test('OOCL  ((Hong Kong) [normal] -> (Hong Kong', () => {
+    const country = getCountryOfOriginFromShipowner(
+      'OOCL  ((Hong Kong)',
+      CountryParsingMode.NORMAL,
+    );
+    expect(country).toEqual('Hong Kong');
+  });
+
+  test('OOCL ((Hong Kong)) [strict] -> Exception', () => {
+    expect(() => {
+      getCountryOfOriginFromShipowner(
+        'OOCL ((Hong Kong))',
+        CountryParsingMode.STRICT,
+      );
+    }).toThrow(ParsingCountryException);
+  });
+
+  test('OOCL ((Hong Kong)) [normal] -> (Hong Kong)', () => {
+    const country = getCountryOfOriginFromShipowner(
+      'OOCL ((Hong Kong))',
+      CountryParsingMode.NORMAL,
+    );
     expect(country).toEqual('(Hong Kong)');
   });
 
-  test('OOCL ((Hong Kong)) (Czech Republic) -> (Hong Kong)) (Czech Republic', () => {
+  test('OOCL ((Hong Kong)) (Czech Republic) [strict] -> Czech Republic', () => {
     const country = getCountryOfOriginFromShipowner(
       'OOCL ((Hong Kong)) (Czech Republic)',
+      CountryParsingMode.STRICT,
     );
-    expect(logSpy).toHaveBeenCalledTimes(0);
-    expect(country).toEqual('(Hong Kong)) (Czech Republic');
+    expect(country).toEqual('Czech Republic');
   });
-  test('OOCL (Myanmar (formerly Burma)) -> Myanmar (formerly Burma)', () => {
+
+  test('OOCL ((Hong Kong)) (Czech Republic) [normal] -> Czech Republic', () => {
+    const country = getCountryOfOriginFromShipowner(
+      'OOCL ((Hong Kong)) (Czech Republic)',
+      CountryParsingMode.NORMAL,
+    );
+    expect(country).toEqual('Czech Republic');
+  });
+
+  test('OOCL (Myanmar (formerly Burma)) [strict] -> Exception', () => {
+    expect(() => {
+      getCountryOfOriginFromShipowner(
+        'OOCL (Myanmar (formerly Burma))',
+        CountryParsingMode.STRICT,
+      );
+    }).toThrow(ParsingCountryException);
+  });
+
+  test('OOCL (Myanmar (formerly Burma)) [normal] -> Myanmar (formerly Burma)', () => {
     const country = getCountryOfOriginFromShipowner(
       'OOCL (Myanmar (formerly Burma))',
+      CountryParsingMode.NORMAL,
     );
-    expect(logSpy).toHaveBeenCalledTimes(0);
     expect(country).toEqual('Myanmar (formerly Burma)');
   });
 
-  test('OOCL (Eswatini (fmr. "Swaziland")) -> Eswatini (fmr. "Swaziland")', () => {
+  test('!!!OOCL (Eswatini (fmr. "Swaziland")) [strict] -> Exception', () => {
+    expect(() => {
+      getCountryOfOriginFromShipowner(
+        'OOCL (Eswatini (fmr. "Swaziland"))',
+        CountryParsingMode.STRICT,
+      );
+    }).toThrow(ParsingCountryException);
+  });
+
+  test('!!!OOCL (Eswatini (fmr. "Swaziland")) -> Eswatini (fmr. "Swaziland")', () => {
     const country = getCountryOfOriginFromShipowner(
       'OOCL (Eswatini (fmr. "Swaziland"))',
+      CountryParsingMode.NORMAL,
     );
-    expect(logSpy).toHaveBeenCalledTimes(0);
     expect(country).toEqual('Eswatini (fmr. "Swaziland")');
   });
 
   test('OOCL (Antigua and Barbuda) -> Antigua and Barbuda', () => {
     const country = getCountryOfOriginFromShipowner(
       'OOCL (Antigua and Barbuda)',
+      CountryParsingMode.STRICT,
     );
-    expect(logSpy).toHaveBeenCalledTimes(0);
     expect(country).toEqual('Antigua and Barbuda');
+  });
+
+  test('(Antigua and Barbuda) [strict] -> Exception', () => {
+    expect(() => {
+      getCountryOfOriginFromShipowner(
+        '(Antigua and Barbuda)',
+        CountryParsingMode.STRICT,
+      );
+    }).toThrow(ParsingCountryException);
+  });
+
+  test('(Antigua and Barbuda) [normal] -> Exception', () => {
+    expect(() => {
+      getCountryOfOriginFromShipowner(
+        '(Antigua and Barbuda)',
+        CountryParsingMode.NORMAL,
+      );
+    }).toThrow(ParsingCountryException);
   });
 });
