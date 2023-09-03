@@ -1,5 +1,5 @@
 import { CountryParsingMode } from '../enums/country-parsing-mode.enum';
-import { ParsingCountryException } from '../exceptions/parsing-country-exception';
+import { CountryParsingException } from '../exceptions/country-parsing-exception';
 
 const regExpForCountryParsingModes: Map<CountryParsingMode, RegExp> = new Map([
   [CountryParsingMode.STRICT, /.+\((?<countryName>[^)]+)\)$/],
@@ -10,7 +10,7 @@ const regExpForCountryParsingModes: Map<CountryParsingMode, RegExp> = new Map([
  * Country name should be in the end and wrapped into round brackets.
  * @param ownerInfo string, Company name
  * @param parsingMode CountryParsingMode, Parsing mode
- * @throws ParsingCountryException When country couldn't be retrieved
+ * @throws CountryParsingException When country couldn't be retrieved
  */
 export const getCountryOfOriginFromShipowner = (
   ownerInfo: string,
@@ -19,7 +19,7 @@ export const getCountryOfOriginFromShipowner = (
   const nameWithCountryRegExp = regExpForCountryParsingModes.get(parsingMode)!!;
   let captureGroups = nameWithCountryRegExp.exec(ownerInfo)?.groups;
   if (!captureGroups) {
-    throw new ParsingCountryException(
+    throw new CountryParsingException(
       `Couldn't retrieve country name from owner info: ${ownerInfo}`,
     );
   }

@@ -1,6 +1,6 @@
 import { CountryParsingMode } from '../enums/country-parsing-mode.enum';
 import { getCountryOfOriginFromShipowner } from './utils';
-import { ParsingCountryException } from '../exceptions/parsing-country-exception';
+import { CountryParsingException } from '../exceptions/country-parsing-exception';
 
 describe('getCountryOfOriginFromShipowner tests', () => {
   test('COSCO (China) [strict] -> China', () => {
@@ -57,7 +57,7 @@ describe('getCountryOfOriginFromShipowner tests', () => {
         'OOCL (Hong Kong',
         CountryParsingMode.STRICT,
       );
-    }).toThrow(ParsingCountryException);
+    }).toThrow(CountryParsingException);
   });
 
   test('OOCL (Hong Kong [normal] -> Exception', () => {
@@ -66,7 +66,7 @@ describe('getCountryOfOriginFromShipowner tests', () => {
         'OOCL (Hong Kong',
         CountryParsingMode.NORMAL,
       );
-    }).toThrow(ParsingCountryException);
+    }).toThrow(CountryParsingException);
   });
 
   test('OOCL Hong Kong [strict] -> Exception', () => {
@@ -75,7 +75,7 @@ describe('getCountryOfOriginFromShipowner tests', () => {
         'OOCL Hong Kong',
         CountryParsingMode.STRICT,
       );
-    }).toThrow(ParsingCountryException);
+    }).toThrow(CountryParsingException);
   });
 
   test('OOCL Hong Kong [normal] -> Exception', () => {
@@ -84,7 +84,7 @@ describe('getCountryOfOriginFromShipowner tests', () => {
         'OOCL Hong Kong',
         CountryParsingMode.NORMAL,
       );
-    }).toThrow(ParsingCountryException);
+    }).toThrow(CountryParsingException);
   });
 
   test('OOCL () Hong Kong [strict] -> Exception', () => {
@@ -93,7 +93,7 @@ describe('getCountryOfOriginFromShipowner tests', () => {
         'OOCL () Hong Kong',
         CountryParsingMode.STRICT,
       );
-    }).toThrow(ParsingCountryException);
+    }).toThrow(CountryParsingException);
   });
 
   test('OOCL () Hong Kong [normal] -> Exception', () => {
@@ -102,19 +102,19 @@ describe('getCountryOfOriginFromShipowner tests', () => {
         'OOCL () Hong Kong',
         CountryParsingMode.NORMAL,
       );
-    }).toThrow(ParsingCountryException);
+    }).toThrow(CountryParsingException);
   });
 
   test('OOCL () [strict] -> Exception', () => {
     expect(() => {
       getCountryOfOriginFromShipowner('OOCL ()', CountryParsingMode.STRICT);
-    }).toThrow(ParsingCountryException);
+    }).toThrow(CountryParsingException);
   });
 
   test('OOCL () [normal] -> Exception', () => {
     expect(() => {
       getCountryOfOriginFromShipowner('OOCL ()', CountryParsingMode.NORMAL);
-    }).toThrow(ParsingCountryException);
+    }).toThrow(CountryParsingException);
   });
 
   test('OOCL  )Hong Kong( [strict] -> Exception', () => {
@@ -123,7 +123,7 @@ describe('getCountryOfOriginFromShipowner tests', () => {
         'OOCL  )Hong Kong(',
         CountryParsingMode.STRICT,
       );
-    }).toThrow(ParsingCountryException);
+    }).toThrow(CountryParsingException);
   });
 
   test('OOCL  )Hong Kong( [normal] -> Exception', () => {
@@ -132,7 +132,7 @@ describe('getCountryOfOriginFromShipowner tests', () => {
         'OOCL  )Hong Kong(',
         CountryParsingMode.NORMAL,
       );
-    }).toThrow(ParsingCountryException);
+    }).toThrow(CountryParsingException);
   });
 
   test('OOCL  ((Hong Kong) [strict] -> Hong Kong', () => {
@@ -157,7 +157,7 @@ describe('getCountryOfOriginFromShipowner tests', () => {
         'OOCL ((Hong Kong))',
         CountryParsingMode.STRICT,
       );
-    }).toThrow(ParsingCountryException);
+    }).toThrow(CountryParsingException);
   });
 
   test('OOCL ((Hong Kong)) [normal] -> (Hong Kong)', () => {
@@ -190,7 +190,7 @@ describe('getCountryOfOriginFromShipowner tests', () => {
         'OOCL (Myanmar (formerly Burma))',
         CountryParsingMode.STRICT,
       );
-    }).toThrow(ParsingCountryException);
+    }).toThrow(CountryParsingException);
   });
 
   test('OOCL (Myanmar (formerly Burma)) [normal] -> Myanmar (formerly Burma)', () => {
@@ -207,7 +207,7 @@ describe('getCountryOfOriginFromShipowner tests', () => {
         'OOCL (Eswatini (fmr. "Swaziland"))',
         CountryParsingMode.STRICT,
       );
-    }).toThrow(ParsingCountryException);
+    }).toThrow(CountryParsingException);
   });
 
   test('!!!OOCL (Eswatini (fmr. "Swaziland")) -> Eswatini (fmr. "Swaziland")', () => {
@@ -232,7 +232,7 @@ describe('getCountryOfOriginFromShipowner tests', () => {
         '(Antigua and Barbuda)',
         CountryParsingMode.STRICT,
       );
-    }).toThrow(ParsingCountryException);
+    }).toThrow(CountryParsingException);
   });
 
   test('(Antigua and Barbuda) [normal] -> Exception', () => {
@@ -241,6 +241,6 @@ describe('getCountryOfOriginFromShipowner tests', () => {
         '(Antigua and Barbuda)',
         CountryParsingMode.NORMAL,
       );
-    }).toThrow(ParsingCountryException);
+    }).toThrow(CountryParsingException);
   });
 });

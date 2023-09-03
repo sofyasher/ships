@@ -1,5 +1,5 @@
 import { get, SHIPS_LIST_URL } from './api';
-import { ShipsModel } from '../models/ship.model';
+import { ShipsModel } from './models/ship.model';
 
 export const fetchShips = (setShips: any) => {
   get(SHIPS_LIST_URL)

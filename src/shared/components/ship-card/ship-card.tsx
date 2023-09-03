@@ -4,7 +4,7 @@ import { ShipModel } from '../../models/ship.model';
 import './ship-card.scss';
 import { getCountryOfOriginFromShipowner } from '../../utils/utils';
 import { CountryParsingMode } from '../../enums/country-parsing-mode.enum';
-import { ParsingCountryException } from '../../exceptions/parsing-country-exception';
+import { CountryParsingException } from '../../exceptions/country-parsing-exception';
 
 type ShipProps = {
   ship: ShipModel;
@@ -18,7 +18,7 @@ const getCountry = (
   try {
     return getCountryOfOriginFromShipowner(shipOwner, parsingMode);
   } catch (e) {
-    if (e instanceof ParsingCountryException) {
+    if (e instanceof CountryParsingException) {
       if (parsingMode === CountryParsingMode.STRICT) {
         return getCountry(shipOwner, CountryParsingMode.NORMAL);
       }
